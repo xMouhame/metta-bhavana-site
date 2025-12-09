@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+
+<span class="pill">Appointments</span>
+<h1>Request an Appointment</h1>
+
+{% if success %}
+    <div class="success-message">
+        Thank you. Your appointment request has been submitted.
+        A confirmation email has been sent to you.
+    </div>
+{% endif %}
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+</form>
+
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<!-- HERO SECTION -->
+<div style="text-align: center; margin-top: 10px; margin-bottom: 35px;
+            animation: fadeIn 0.8s ease-out;">
+    
+    <!-- Large Logo -->
+    <img src="{% static 'images/logo.png' %}" 
+         alt="Clinic Logo"
+         style="width: 160px; max-width: 70%; height: auto; margin-bottom: 15px;">
+
+    <!-- Clinic Title -->
+    <h1 style="font-size: 2rem; margin: 0; color: #1f2933; letter-spacing: 1px;">
+        METTA BHAVANA
+    </h1>
+
+    <!-- Subtitle -->
+    <h2 style="font-size: 1.1rem; margin-top: 6px; font-weight: 500; color: #6b7280;">
+        PSYCHOLOGICAL & SPIRITUAL WELLNESS
+    </h2>
+</div>
+
+<span class="pill">Welcome</span>
+<p class="muted">Holistic, compassionate care for mind, body, and spirit.</p>
+
+<!-- INTRO VIDEO (AUTOPLAY, LOOP, MUTED) -->
+<h2>Welcome Video</h2>
+<video width="100%"
+       autoplay
+       loop
+       muted
+       playsinline
+       style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.12); margin-bottom: 25px;">
+    <source src="{% static 'videos/intro.MP4' %}" type="video/mp4">
+</video>
+
+<!-- CLINIC PHOTO -->
+<h2>Our Clinic</h2>
+<img src="{% static 'images/clinic.JPG' %}" 
+     alt="Clinic Image"
+     style="width: 100%; height: auto; border-radius: 12px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12); margin-bottom: 30px;">
+
+<!-- MISSION -->
+<h2>Mission – Metta Bhavana Psychological & Spiritual Wellness</h2>
+<p>
+    Metta Bhavana Psychological & Spiritual Wellness provides our diverse communities 
+    open access to high-quality, culturally grounded mental health services that foster 
+    lifelong growth and well-being.
+</p>
+
+<!-- VISION -->
+<h2>Vision</h2>
+<p>
+    To be a leader in accessible, affordable, and compassionate psychological and spiritual
+    wellness services that honor the evolving needs of the communities we serve.
+</p>
+
+<!-- SCHEDULING SECTION -->
+<div style="text-align: center; margin-top: 50px; padding: 30px 20px; border-top: 1px solid #e5e7eb;">
+    <p style="font-size: 1.1rem; color: #1f2933; line-height: 1.6;">
+        If you are looking to schedule an appointment, please visit our Scheduling Page.
+    </p>
+
+    <a href="/appointments/"
+       style="display: inline-block; margin-top: 14px; padding: 12px 26px;
+              border: 2px solid #3b82f6; border-radius: 999px; text-decoration: none;
+              color: #3b82f6; font-weight: 600; font-size: 1rem;
+              transition: all 0.25s ease;">
+        Schedule here
+    </a>
+</div>
+
+<!-- FADE-IN ANIMATION -->
+<style>
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+</style>
+
+{% endblock %}

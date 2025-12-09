@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<span class="pill">About</span>
+<h1>About Papa Fall</h1>
+
+<div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 20px;">
+    <img src="{% static 'images/papa.jpeg' %}" 
+         alt="Papa Fall" 
+         style="width: 220px; height: auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); margin-bottom: 10px;">
+</div>
+
+<p>
+    Papa earned his Bachelor’s degree from the University of Wisconsin–Oshkosh and
+    a Master of Social Work (MSW) from the University of Wisconsin–Madison with a
+    specialization in Mental Health.
+</p>
+
+<p>
+    He has extensive experience providing individual, family, and group therapy in both
+    outpatient and inpatient settings. Papa is trained in CBT, DBT, ACT, Motivational
+    Interviewing, Mindfulness, and other evidence-based approaches.
+</p>
+
+<p>
+    His work focuses on mental health assessment, trauma, cultural competency,
+    mindfulness, burnout, and substance use support. He also serves as a lecturer at
+    UW-Madison and Madison College.
+</p>
+
+<p>
+    Outside of clinical work, Papa enjoys traveling, reading, exercising, dancing,
+    and spending time outdoors.
+</p>
+
+{% endblock %}
