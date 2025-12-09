@@ -25,7 +25,14 @@ SECRET_KEY = 'django-insecure-)enli+rs=_5-h=-&&q-ru4%7r&oer(-clacerj)!(td=_@8(i+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    ".onrender.com",
+    "mettabhavanatherapy.com",
+    "www.mettabhavanatherapy.com",
+]
+
 
 
 # Application definition
