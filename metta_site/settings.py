@@ -18,7 +18,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-)enli+rs=_5-h=-&&q-ru4%7r&oer(-clacerj)!(td=_@8(i+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True  # we can switch this to False later on Render
+DEBUG = True  # we can switch this later if needed
 
 ALLOWED_HOSTS = [
     "localhost",
@@ -133,18 +133,23 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
 # Email settings for appointment notifications
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
+# For now, use console backend so Render doesn't hang on smtp.gmail.com.
+# Emails will be printed to logs instead of actually being sent.
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+# Keeping these in case we later switch back to real Gmail (e.g. for local dev)
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 EMAIL_HOST_USER = "mettabhavana.wellness@gmail.com"
-EMAIL_HOST_PASSWORD = "burrwfyfutxfnvef"  # app password
+EMAIL_HOST_PASSWORD = "burrwfyfutxfnvef"  # Gmail app password
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+EMAIL_TIMEOUT = 10  # avoid long hangs if backend ever talks to SMTP again
 
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-EMAIL_TIMEOUT = 10

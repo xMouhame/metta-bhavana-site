@@ -32,7 +32,7 @@ def appointments(request):
     Show the appointment form and handle submissions.
     - On GET: show empty form
     - On POST: save appointment, try to send emails
-    - If email fails, log error but still show success to user
+    - If email fails, log error but still show success to user.
     """
     if request.method == "POST":
         form = AppointmentForm(request.POST)
@@ -41,7 +41,6 @@ def appointments(request):
             appointment = form.save()
 
             # ----- Build email content -----
-            # Adjust field names here if your model uses different ones
             name = getattr(appointment, "name", "")
             email = getattr(appointment, "email", "")
             phone = getattr(appointment, "phone", "")
@@ -78,13 +77,13 @@ def appointments(request):
 
             # ----- Try to send both emails -----
             try:
-                # Email to clinic (goes to your Gmail / DEFAULT_FROM_EMAIL)
+                # Email to clinic (goes to DEFAULT_FROM_EMAIL / console backend for now)
                 send_mail(
                     subject_clinic,
                     message_clinic,
                     settings.DEFAULT_FROM_EMAIL,
                     [settings.DEFAULT_FROM_EMAIL],
-                    fail_silently=False,
+                    fail_silently=True,
                 )
 
                 # Confirmation email to the client
@@ -94,7 +93,7 @@ def appointments(request):
                         message_client,
                         settings.DEFAULT_FROM_EMAIL,
                         [email],
-                        fail_silently=False,
+                        fail_silently=True,
                     )
 
             except Exception as e:
