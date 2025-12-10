@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Metta Bhavana Psychological & Spiritual Wellness</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
@@ -519,12 +520,22 @@
 
         /* FOOTER */
         .site-footer {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e293b 50%, #0f172a 100%);
             color: #e2e8f0;
-            padding: 3rem 1.5rem 1.5rem;
+            padding: 3.5rem 1.5rem 1.5rem;
             margin-top: 4rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
             position: relative;
+            overflow: hidden;
+        }
+
+        .site-footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.5), transparent);
         }
 
         .footer-inner {
@@ -532,46 +543,144 @@
             margin: 0 auto;
             display: flex;
             flex-direction: column;
-            gap: 2rem;
+            gap: 2.5rem;
+        }
+
+        .footer-section {
+            flex: 1;
         }
 
         .footer-heading {
-            font-size: 1.15rem;
+            font-size: 1.2rem;
             font-weight: 700;
-            margin-bottom: 0.75rem;
+            margin-bottom: 1.25rem;
             color: #ffffff;
             letter-spacing: -0.01em;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .footer-contact p,
-        .footer-social p {
-            margin: 0.5rem 0;
-            font-size: 0.95rem;
+        .footer-heading i {
+            color: var(--primary-light);
+            font-size: 1.1rem;
+        }
+
+        .footer-contact p {
+            margin: 0.75rem 0;
+            font-size: 1rem;
             color: #cbd5e1;
-            transition: color 0.2s ease;
-        }
-
-        .footer-social a {
-            color: #60a5fa;
-            text-decoration: none;
-            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
             transition: all 0.3s ease;
         }
 
-        .footer-social a:hover {
-            color: #93c5fd;
+        .footer-contact p i {
+            color: var(--accent-light);
+            width: 20px;
+            font-size: 1rem;
+        }
+
+        .footer-contact p:hover {
+            color: #f1f5f9;
             transform: translateX(4px);
-            display: inline-block;
+        }
+
+        .social-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 0;
+        }
+
+        .social-link i {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-link.facebook i {
+            background: linear-gradient(135deg, #1877f2, #0c63d4);
+            color: white;
+        }
+
+        .social-link.instagram i {
+            background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af);
+            color: white;
+        }
+
+        .social-link:hover {
+            color: #f1f5f9;
+            transform: translateX(6px);
+        }
+
+        .social-link:hover i {
+            transform: scale(1.1) rotate(-5deg);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+        }
+
+        .footer-divider {
+            max-width: 1120px;
+            margin: 2.5rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .footer-logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-logo-img {
+            height: 40px;
+            width: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .footer-brand-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #818cf8, #2dd4bf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .footer-bottom {
-            max-width: 1120px;
-            margin: 2rem auto 0;
-            padding-top: 1.5rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 0.875rem;
+            font-size: 0.9rem;
             color: #94a3b8;
             text-align: center;
+            line-height: 1.6;
+        }
+
+        .footer-bottom p {
+            margin: 0.25rem 0;
+            color: #94a3b8;
+            font-size: 0.9rem;
         }
 
         /* RESPONSIVE */
@@ -612,6 +721,16 @@
                 flex-direction: row;
                 justify-content: space-between;
                 align-items: flex-start;
+                gap: 4rem;
+            }
+
+            .footer-divider {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+
+            .footer-bottom {
+                text-align: right;
             }
 
             h1 {
@@ -726,20 +845,43 @@
 
     <footer class="site-footer">
         <div class="footer-inner">
-            <div class="footer-contact">
-                <div class="footer-heading">Contact</div>
-                <p>Phone: (414) 801-9208</p>
-                <p>Email: Pfall89@gmail.com</p>
-                <p>Location: 330 E Lakeside St, Madison, WI 53715</p>
+            <div class="footer-section footer-contact">
+                <div class="footer-heading">
+                    <i class="fas fa-address-book"></i>
+                    Contact Us
+                </div>
+                <p><i class="fas fa-phone"></i> (414) 801-9208</p>
+                <p><i class="fas fa-envelope"></i> Pfall89@gmail.com</p>
+                <p><i class="fas fa-map-marker-alt"></i> 330 E Lakeside St, Madison, WI 53715</p>
             </div>
-            <div class="footer-social">
-                <div class="footer-heading">Connect</div>
-                <p><a href="https://www.facebook.com/profile.php?id=61584940796947" target="_blank" rel="noopener noreferrer">Facebook</a></p>
-                <p><a href="#">Instagram (coming soon)</a></p>
+            
+            <div class="footer-section footer-social">
+                <div class="footer-heading">
+                    <i class="fas fa-share-nodes"></i>
+                    Connect With Us
+                </div>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/profile.php?id=61584940796947" target="_blank" rel="noopener noreferrer" class="social-link facebook">
+                        <i class="fab fa-facebook"></i>
+                        <span>Follow us on Facebook</span>
+                    </a>
+                    <a href="#" class="social-link instagram">
+                        <i class="fab fa-instagram"></i>
+                        <span>Instagram (coming soon)</span>
+                    </a>
+                </div>
             </div>
         </div>
-        <div class="footer-bottom">
-            © 2024 Metta Bhavana Psychological & Spiritual Wellness. All rights reserved.
+        
+        <div class="footer-divider">
+            <div class="footer-logo-section">
+                <img src="{% static 'images/logo.png' %}" alt="Metta Bhavana logo" class="footer-logo-img">
+                <span class="footer-brand-name">Metta Bhavana</span>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024 Metta Bhavana Psychological & Spiritual Wellness</p>
+                <p>All rights reserved.</p>
+            </div>
         </div>
     </footer>
 </div>
