@@ -4,7 +4,7 @@ import logging
 
 from django.conf import settings
 from django.shortcuts import render
-from django.core.mail import send_mail
+import resend  # use Resend API for emails
 
 from .forms import AppointmentForm
 
@@ -31,7 +31,7 @@ def appointments(request):
     """
     Show the appointment form and handle submissions.
     - On GET: show empty form
-    - On POST: save appointment, try to send emails
+    - On POST: save appointment, send emails via Resend.
     - If email fails, log error but still show success to user.
     """
     if request.method == "POST":
@@ -50,7 +50,7 @@ def appointments(request):
 
             # Email TO CLINIC
             subject_clinic = f"New appointment request from {name}"
-            message_clinic = (
+            body_clinic = (
                 "A new appointment has been requested:\n\n"
                 f"Name: {name}\n"
                 f"Email: {email}\n"
@@ -62,7 +62,7 @@ def appointments(request):
 
             # Email TO CLIENT
             subject_client = "Your appointment request with Metta Bhavana"
-            message_client = (
+            body_client = (
                 f"Dear {name},\n\n"
                 "Thank you for contacting Metta Bhavana Psychological & "
                 "Spiritual Wellness.\n\n"
@@ -75,34 +75,34 @@ def appointments(request):
                 "Metta Bhavana Psychological & Spiritual Wellness"
             )
 
-            # 🔸 Debug so we SEE something in Render logs for sure
-            print("=== New appointment submitted ===")
-            print(message_clinic)
+            # Debug so we see in logs
+            print("=== New appointment submitted (Resend) ===")
+            print(body_clinic)
 
-            # ----- Try to send both emails -----
+            # ----- Try to send both emails via Resend -----
             try:
-                # Email to clinic (goes to DEFAULT_FROM_EMAIL / console backend for now)
-                send_mail(
-                    subject_clinic,
-                    message_clinic,
-                    settings.DEFAULT_FROM_EMAIL,
-                    [settings.DEFAULT_FROM_EMAIL],
-                    fail_silently=True,
-                )
+                if getattr(settings, "RESEND_API_KEY", ""):
+                    # Email to clinic
+                    resend.Emails.send({
+                        "from": settings.DEFAULT_FROM_EMAIL,
+                        "to": ["mettabhavana.wellness@gmail.com"],
+                        "subject": subject_clinic,
+                        "text": body_clinic,
+                    })
 
-                # Confirmation email to the client
-                if email:
-                    send_mail(
-                        subject_client,
-                        message_client,
-                        settings.DEFAULT_FROM_EMAIL,
-                        [email],
-                        fail_silently=True,
-                    )
+                    # Confirmation email to the client
+                    if email:
+                        resend.Emails.send({
+                            "from": settings.DEFAULT_FROM_EMAIL,
+                            "to": [email],
+                            "subject": subject_client,
+                            "text": body_client,
+                        })
+                else:
+                    logger.error("RESEND_API_KEY is not set; skipping email send.")
 
             except Exception as e:
-                # Don't crash the site if email fails – just log it to Render logs
-                logger.error("Error sending appointment emails: %s", e)
+                logger.error("Error sending appointment emails via Resend: %s", e)
 
             # Show success message and an empty form again
             return render(
@@ -110,7 +110,7 @@ def appointments(request):
                 "appointments.html",
                 {
                     "form": AppointmentForm(),  # new empty form
-                    "success": True,            # you can use this in the template
+                    "success": True,            # used in the template
                 },
             )
 
