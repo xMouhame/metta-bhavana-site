@@ -75,6 +75,10 @@ def appointments(request):
                 "Metta Bhavana Psychological & Spiritual Wellness"
             )
 
+            # 🔸 Debug so we SEE something in Render logs for sure
+            print("=== New appointment submitted ===")
+            print(message_clinic)
+
             # ----- Try to send both emails -----
             try:
                 # Email to clinic (goes to DEFAULT_FROM_EMAIL / console backend for now)

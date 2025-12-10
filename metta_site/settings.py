@@ -138,18 +138,15 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # Emails will be printed to logs instead of actually being sent.
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-# Keeping these in case we later switch back to real Gmail (e.g. for local dev)
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 EMAIL_HOST_USER = "mettabhavana.wellness@gmail.com"
-EMAIL_HOST_PASSWORD = "burrwfyfutxfnvef"  # Gmail app password
+EMAIL_HOST_PASSWORD = "burrwfyfutxfnvef"  # app password
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-EMAIL_TIMEOUT = 10  # avoid long hangs if backend ever talks to SMTP again
+EMAIL_TIMEOUT = 10
 
-
-# Default primary key field type
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
