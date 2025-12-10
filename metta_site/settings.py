@@ -146,3 +146,5 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+EMAIL_TIMEOUT = 10
