@@ -44,10 +44,10 @@ def _send_resend_email(*, from_email: str, to_email: str, subject: str, text: st
 def appointments(request):
     """
     Appointment form:
-    - Saves the appointment in DB
+    - Saves appointment in DB
     - Sends notification to clinic + cousin personal email
-    - Sends confirmation to client via Resend
-    - If email fails, site still shows success (but logs the error)
+    - Sends confirmation to client
+    - Never breaks the page if email fails
     """
     if request.method == "POST":
         form = AppointmentForm(request.POST)
@@ -85,22 +85,20 @@ def appointments(request):
                 "Metta Bhavana Psychological & Spiritual Wellness"
             )
 
-            # Always show something in Render logs
+            # Always log submission (for Render logs)
             print("=== New appointment submitted (Resend) ===")
             print(body_clinic)
 
-            # ✅ ADD COUSIN PERSONAL EMAIL HERE
-            COUSIN_PERSONAL_EMAIL = "REPLACE_THIS_WITH_HIS_EMAIL@gmail.com"
+            # ✅ Cousin personal email (ADDED)
+            COUSIN_PERSONAL_EMAIL = "Pfall89@gmail.com"
 
-            # Send emails (but don't break the page if they fail)
             try:
                 if not settings.RESEND_API_KEY:
-                    raise RuntimeError("RESEND_API_KEY is not set in environment variables.")
+                    raise RuntimeError("RESEND_API_KEY is not set.")
 
-                # 1) Try normal sender
                 from_email = settings.DEFAULT_FROM_EMAIL
 
-                # Email to clinic inbox
+                # 1️⃣ Clinic inbox
                 _send_resend_email(
                     from_email=from_email,
                     to_email=settings.CLINIC_NOTIFY_EMAIL,
@@ -108,16 +106,15 @@ def appointments(request):
                     text=body_clinic,
                 )
 
-                # Email to cousin personal email
-                if COUSIN_PERSONAL_EMAIL and "REPLACE_THIS_WITH_HIS_EMAIL" not in COUSIN_PERSONAL_EMAIL:
-                    _send_resend_email(
-                        from_email=from_email,
-                        to_email=COUSIN_PERSONAL_EMAIL,
-                        subject=subject_clinic,
-                        text=body_clinic,
-                    )
+                # 2️⃣ Cousin personal email
+                _send_resend_email(
+                    from_email=from_email,
+                    to_email=COUSIN_PERSONAL_EMAIL,
+                    subject=subject_clinic,
+                    text=body_clinic,
+                )
 
-                # Confirmation to client
+                # 3️⃣ Client confirmation
                 if email:
                     _send_resend_email(
                         from_email=from_email,
@@ -127,44 +124,15 @@ def appointments(request):
                     )
 
             except Exception as e:
-                # 2) Optional fallback sender if you set FALLBACK_FROM_EMAIL
-                try:
-                    if getattr(settings, "FALLBACK_FROM_EMAIL", ""):
-                        logger.warning("Primary sender failed. Trying fallback sender. Error: %s", e)
-
-                        from_email = settings.FALLBACK_FROM_EMAIL
-
-                        _send_resend_email(
-                            from_email=from_email,
-                            to_email=settings.CLINIC_NOTIFY_EMAIL,
-                            subject=subject_clinic,
-                            text=body_clinic,
-                        )
-
-                        if COUSIN_PERSONAL_EMAIL and "REPLACE_THIS_WITH_HIS_EMAIL" not in COUSIN_PERSONAL_EMAIL:
-                            _send_resend_email(
-                                from_email=from_email,
-                                to_email=COUSIN_PERSONAL_EMAIL,
-                                subject=subject_clinic,
-                                text=body_clinic,
-                            )
-
-                        if email:
-                            _send_resend_email(
-                                from_email=from_email,
-                                to_email=email,
-                                subject=subject_client,
-                                text=body_client,
-                            )
-                    else:
-                        logger.error("Error sending appointment emails via Resend: %s", e)
-                except Exception as e2:
-                    logger.error("Fallback sender also failed: %s", e2)
+                logger.error("Error sending appointment emails via Resend: %s", e)
 
             return render(
                 request,
                 "appointments.html",
-                {"form": AppointmentForm(), "success": True},
+                {
+                    "form": AppointmentForm(),
+                    "success": True,
+                },
             )
 
         return render(request, "appointments.html", {"form": form})
